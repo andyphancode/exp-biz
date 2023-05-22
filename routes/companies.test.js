@@ -8,6 +8,7 @@ const db = require("../db");
 beforeEach(createData);
 
 afterAll(async () => {
+    process.env.NODE_ENV === "dev";
     await db.end()
   });
 
@@ -36,14 +37,15 @@ describe("GET /apple", function () {
               code: "apple",
               name: "Apple",
               description: "Maker of OSX.",
-              invoices: [1, 2],
+              industries: ['tech','hosp'],
+              invoices: [1, 2]
             }
           }
       );
     });
   
     test("Return 404 for no company", async function () {
-      const response = await request(app).get("/companies/fake");
+      const response = await request(app).get("/companies/404");
       expect(response.status).toEqual(404);
     })
   });
