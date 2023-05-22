@@ -9,6 +9,7 @@ beforeEach(createData);
 
 
 afterAll(async () => {
+    process.env.NODE_ENV === "dev";
     await db.end()
 });
 
