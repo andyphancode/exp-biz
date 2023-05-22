@@ -1,6 +1,6 @@
 const express = require("express");
-const ExpressError = require("../expressError")
-const slugify = require("slugify")
+const ExpressError = require("../expressError");
+const slugify = require("slugify");
 const db = require("../db");
 
 const router = new express.Router();
