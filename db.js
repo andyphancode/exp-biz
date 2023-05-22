@@ -1,12 +1,18 @@
 /** Database setup for BizTime. */
 
+// Replaced code to fix bug on Ubuntu side, not sure if it'll work for mac.
+
 const { Client } = require("pg");
 
-const client = new Client({
-  connectionString: "postgresql:///biztime"
-});
+const DB = (process.env.NODE_ENV === "test") 
+  ? "biztime_test"
+  : "biztime";
 
-client.connect();
+let db = new Client({
+    host: "/var/run/postgresql/",
+    database: DB
+  });
 
+db.connect();
 
-module.exports = client;
+module.exports = db;
