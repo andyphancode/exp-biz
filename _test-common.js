@@ -1,4 +1,5 @@
 
+process.env.NODE_ENV = "test";
 
 const db = require("./db");
 
@@ -6,6 +7,8 @@ const db = require("./db");
 async function createData() {
   await db.query("DELETE FROM invoices");
   await db.query("DELETE FROM companies");
+  await db.query("DELETE FROM industries");
+  await db.query("DELETE FROM companies_industries");
   await db.query("SELECT setval('invoices_id_seq', 1, false)");
 
   await db.query(`INSERT INTO companies (code, name, description)
@@ -18,6 +21,16 @@ async function createData() {
                   ('apple', 200, true, '2018-02-01', '2018-02-02'), 
                   ('ibm', 300, false, '2018-03-01', null)
            RETURNING id`);
+  await db.query(`INSERT INTO industries 
+  VALUES ('tech', 'Tech'),
+         ('acct', 'Accounting'),
+         ('hosp', 'Hospitality')`);
+  await db.query(`INSERT INTO companies_industries VALUES
+  ('apple','tech'),
+  ('ibm','tech'),
+  ('apple','hosp'),
+  ('ibm', 'acct')`);
+       
 }
 
 
